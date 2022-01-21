@@ -128,7 +128,7 @@ spec:
           volumeMounts:
             -
               mountPath: /src/webui.js
-              name: hasher-volume
+              name: webui-volume
               readOnly: true
               subPath: webui.js
           workingDir: /src/
