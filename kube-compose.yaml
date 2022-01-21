@@ -201,44 +201,42 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: worker
+      app: redis
       env: production
-      tier: backend
+      tier: database
   template:
     metadata:
       labels:
-        app: worker
+        app: redis
         env: production
-        tier: backend
+        tier: database
     spec:
       containers:
         - 
           args:
-            - worker.py
+            - redis-server
           command:
-            - python
-          image: library/python:latest
-          name: worker-container
+            - docker-entrypoint.sh
+          image: library/redis:latest
+          name: redis-container
           ports:
             - 
-              containerPort: 8080
+              containerPort: 6379
               protocol: TCP
           volumeMounts:
             -
-              mountPath: /src/worker.py
-              name: worker-volume
-              readOnly: true
-              subPath: worker.py
-          workingDir: /src/
-      volumes:
-        -
-          configMap:
-            defaultMode: 0400
-            items:
-              -
-                key: worker.py
-                mode: 0400
-                path: worker.py
-            name: worker-cm
-          name: worker-volume
+              mountPath: /data/
+              name: redis-volume
+              readOnly: false
+          workingDir: /data/
   volumeClaimTemplates:
+    - 
+      metadata:
+        name: redis-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gp2
+        resources:
+          requests:
+            storage: 1Gi
