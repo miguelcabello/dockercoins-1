@@ -1,1 +1,2 @@
-FROM nodejs
+FROM node
+RUN npm install express
