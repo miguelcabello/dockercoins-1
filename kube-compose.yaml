@@ -240,3 +240,19 @@ spec:
         resources:
           requests:
             storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+spec:
+  ports:
+    -
+      port: 80
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+    env: production
+    tier: database
+  type: ClusterIP
