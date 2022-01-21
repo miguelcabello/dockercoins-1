@@ -125,7 +125,7 @@ spec:
             - webui.js
           command:
             - node
-          image: academiaonline/dockercoins-webui:0.4
+          image: academiaonline/dockercoins:2.4-webui
           name: webui-container
           ports:
             - 
@@ -133,11 +133,11 @@ spec:
               protocol: TCP
           volumeMounts:
             -
-              mountPath: /webui.js
+              mountPath: /app/webui.js
               name: webui-volume
               readOnly: true
               subPath: webui.js
-          workingDir: /
+          workingDir: /app/
       volumes:
         -
           configMap:
