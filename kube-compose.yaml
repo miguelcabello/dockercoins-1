@@ -117,6 +117,8 @@ spec:
         env: production
         tier: frontend
     spec:
+      imagePullSecrets:
+        - name: docker-academiaonline      
       containers:
         - 
           args:
