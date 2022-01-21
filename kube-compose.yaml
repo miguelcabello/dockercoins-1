@@ -16,13 +16,15 @@ spec:
         env: production
         tier: backend
     spec:
+      imagePullSecrets:
+        - name: docker-academiaonline
       containers:
         - 
           args:
             - hasher.rb
           command:
             - ruby
-          image: guiprerod/dockercoins-hasher:latest
+          image: academiaonline/dockercoins-hasher:0.1
           name: hasher-container
           ports:
             - 
@@ -64,13 +66,15 @@ spec:
         env: production
         tier: backend
     spec:
+      imagePullSecrets:
+        - name: docker-academiaonline
       containers:
         - 
           args:
             - rng.py
           command:
             - python
-          image: library/python:latest
+          image: academiaonline/dockercoins-rng:0.1
           name: rng-container
           ports:
             - 
@@ -162,13 +166,15 @@ spec:
         env: production
         tier: backend
     spec:
+      imagePullSecrets:
+        - name: docker-academiaonline
       containers:
         - 
           args:
             - worker.py
           command:
             - python
-          image: library/python:latest
+          image: academiaonline/dockercoins-worker:0.2
           name: worker-container
           ports:
             - 
