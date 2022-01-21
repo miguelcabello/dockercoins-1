@@ -262,3 +262,19 @@ spec:
     env: production
     tier: database
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rng
+spec:
+  ports:
+    -
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: rng
+    env: production
+    tier: backend
+  type: ClusterIP
