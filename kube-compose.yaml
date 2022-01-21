@@ -278,3 +278,19 @@ spec:
     env: production
     tier: backend
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hasher
+spec:
+  ports:
+    -
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: hasher
+    env: production
+    tier: backend
+  type: ClusterIP  
