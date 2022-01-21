@@ -22,7 +22,7 @@ spec:
             - hasher.rb
           command:
             - ruby
-          image: library/ruby:latest
+          image: guiprerod/dockercoins-hasher:latest
           name: hasher-container
           ports:
             - 
