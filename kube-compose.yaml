@@ -276,9 +276,9 @@ spec:
           name: rng-volume
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: webui-deploy
+  name: webui-sts
 spec:
   replicas: 2
   selector:
@@ -294,7 +294,7 @@ spec:
         tier: frontend
     spec:
       imagePullSecrets:
-        - name: docker-academiaonline      
+        - name: santander      
       containers:
         - 
           args:
@@ -353,11 +353,17 @@ spec:
             medium: Memory
             sizeLimit: 1Mi
           name: webui-downloads
-        -
-          name: webui-files
-          persistentVolumeClaim:
-            claimName: webui-pvc
-            readOnly: false
+  volumeClaimTemplates:
+    - 
+      metadata:
+        name: webui-files
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gp2
+        resources:
+          requests:
+            storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
