@@ -309,11 +309,11 @@ spec:
               protocol: TCP
           volumeMounts:
             -
-              mountPath: /app/webui.js
+              mountPath: /src/webui.js
               name: webui-volume
               readOnly: true
               subPath: webui.js
-          workingDir: /app/
+          workingDir: /src/
       volumes:
         -
           configMap:
