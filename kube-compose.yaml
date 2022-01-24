@@ -301,7 +301,7 @@ spec:
             - webui.js
           command:
             - node
-          image: academiaonline/dockercoins-webui:1.1
+          image: academiaonline/dockercoins-webui:2.0
           name: webui-container
           ports:
             - 
@@ -309,11 +309,33 @@ spec:
               protocol: TCP
           volumeMounts:
             -
+              mountPath: /src/
+              name: webui-files
+              readOnly: true
+            -
               mountPath: /src/webui.js
               name: webui-volume
               readOnly: true
               subPath: webui.js
           workingDir: /src/
+      initContainers:
+        -
+          args:
+            - git clone https://github.com/academiaonline-org/dockercoins ; cd dockercoins ; git checkout openshift ; mv webui/files/ /src/
+          command:
+            - sh -c
+          image: bitnami/git:latest
+          name: webui-git
+          volumeMounts:
+            -
+              mountPath: /downloads/
+              name: webui-downloads
+              readOnly: false
+            -
+              mountPath: /src/
+              name: webui-files
+              readOnly: false
+          workingDir: /downloads/
       volumes:
         -
           configMap:
@@ -325,6 +347,12 @@ spec:
                 path: webui.js
             name: webui-cm
           name: webui-volume
+        -
+          emptyDir: {}
+          name: webui-downloads
+        -
+          emptyDir: {}
+          name: webui-files
 ---
 apiVersion: apps/v1
 kind: Deployment
