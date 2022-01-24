@@ -301,7 +301,7 @@ spec:
             - webui.js
           command:
             - node
-          image: academiaonline/dockercoins-webui:1.0
+          image: academiaonline/dockercoins-webui:1.1
           name: webui-container
           ports:
             - 
