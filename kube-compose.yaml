@@ -354,10 +354,10 @@ spec:
             sizeLimit: 1Mi
           name: webui-downloads
         -
-          emptyDir:
-            medium: Memory
-            sizeLimit: 1Mi
           name: webui-files
+          persistentVolumeClaim:
+            claimName: webui-pvc
+            readOnly: false
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -409,6 +409,21 @@ spec:
                 path: worker.py
             name: worker-cm
           name: worker-volume
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: webui-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    limits: 
+      storage: 1Gi
+    requests: 
+      storage: 1Gi
+  storageClassName: gp2
+  volumeMode: Filesystem
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
