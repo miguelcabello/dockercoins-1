@@ -321,7 +321,7 @@ spec:
       initContainers:
         -
           args:
-            - git clone https://github.com/academiaonline-org/dockercoins ; cd dockercoins ; git checkout openshift ; mv webui/files/ /src/
+            - git clone -b openshift --single-branch https://github.com/academiaonline-org/dockercoins ; mv dockercoins/webui/files/ /src/
           command:
             - sh
             - -c
@@ -349,10 +349,14 @@ spec:
             name: webui-cm
           name: webui-volume
         -
-          emptyDir: {}
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
           name: webui-downloads
         -
-          emptyDir: {}
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
           name: webui-files
 ---
 apiVersion: apps/v1
