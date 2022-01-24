@@ -309,19 +309,19 @@ spec:
               protocol: TCP
           volumeMounts:
             -
-              mountPath: /src/
+              mountPath: /src/files/
               name: webui-files
-              readOnly: false
+              readOnly: true
             -
               mountPath: /src/webui.js
               name: webui-volume
-              readOnly: false
+              readOnly: true
               subPath: webui.js
           workingDir: /src/
       initContainers:
         -
           args:
-            - git clone -b openshift --single-branch https://github.com/academiaonline-org/dockercoins ; mv dockercoins/webui/files/ /src/
+            - set -x ; git clone -b openshift --single-branch https://github.com/academiaonline-org/dockercoins ; cp -rv dockercoins/webui/files/* /src/files/
           command:
             - sh
             - -c
@@ -333,7 +333,7 @@ spec:
               name: webui-downloads
               readOnly: false
             -
-              mountPath: /src/
+              mountPath: /src/files/
               name: webui-files
               readOnly: false
           workingDir: /downloads/
