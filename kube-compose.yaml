@@ -377,6 +377,17 @@ spec:
             name: worker-cm
           name: worker-volume
 ---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: webui-route
+spec:
+  to:
+    kind: Service
+    name: webui
+  port:
+    targetPort: 8080
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -471,4 +482,20 @@ spec:
     app: hasher
     env: production
     tier: backend
+  type: ClusterIP  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webui
+spec:
+  ports:
+    -
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: webui
+    env: production
+    tier: frontend
   type: ClusterIP  
