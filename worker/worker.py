@@ -18,6 +18,7 @@ redis = Redis("redis")
 
 
 def get_random_bytes():
+    # Se mantiene puerto 80 para el service
     r = requests.get("http://rng/32")
     return r.content
 
