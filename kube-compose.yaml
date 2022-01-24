@@ -311,11 +311,11 @@ spec:
             -
               mountPath: /src/
               name: webui-files
-              readOnly: true
+              readOnly: false
             -
               mountPath: /src/webui.js
               name: webui-volume
-              readOnly: true
+              readOnly: false
               subPath: webui.js
           workingDir: /src/
       initContainers:
@@ -323,7 +323,8 @@ spec:
           args:
             - git clone https://github.com/academiaonline-org/dockercoins ; cd dockercoins ; git checkout openshift ; mv webui/files/ /src/
           command:
-            - sh -c
+            - sh
+            - -c
           image: bitnami/git:latest
           name: webui-git
           volumeMounts:
