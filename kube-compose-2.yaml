@@ -497,6 +497,8 @@ spec:
     app: redis
     env: production
     tier: database
+    version-dockercoins: "1.0"
+    version-redis: "latest"
   type: ClusterIP
 ---
 apiVersion: v1
@@ -513,6 +515,8 @@ spec:
     app: rng
     env: production
     tier: backend
+    version-dockercoins: "1.0"
+    version-rng: "0.1"
   type: ClusterIP
 ---
 apiVersion: v1
@@ -529,6 +533,8 @@ spec:
     app: hasher
     env: production
     tier: backend
+    version-dockercoins: "1.0"
+    version-hasher: "0.1"
   type: ClusterIP  
 ---
 apiVersion: v1
@@ -545,4 +551,6 @@ spec:
     app: webui
     env: production
     tier: frontend
+    version-dockercoins: "1.0"
+    version-webui: "2.0"
   type: ClusterIP  
