@@ -432,7 +432,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: redis-sts
+  name: redis-sts-1.1
 spec:
   replicas: 1
   selector:
@@ -440,7 +440,7 @@ spec:
       app: redis
       env: production
       tier: database
-      version-dockercoins: "1.0"
+      version-dockercoins: "1.1"
       version-redis: "latest"
   template:
     metadata:
@@ -448,7 +448,7 @@ spec:
         app: redis
         env: production
         tier: database
-        version-dockercoins: "1.0"
+        version-dockercoins: "1.1"
         version-redis: "latest"
     spec:
       imagePullSecrets:
@@ -486,7 +486,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: redis-1-1
 spec:
   ports:
     -
@@ -497,7 +497,7 @@ spec:
     app: redis
     env: production
     tier: database
-    version-dockercoins: "1.0"
+    version-dockercoins: "1.1"
     version-redis: "latest"
   type: ClusterIP
 ---
