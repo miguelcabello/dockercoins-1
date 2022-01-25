@@ -48,7 +48,7 @@ def work_loop(interval=1):
 
 def work_once():
     log.debug("Doing one unit of work")
-    time.sleep(0.1)
+    time.sleep(0.01)
     random_bytes = get_random_bytes()
     hex_hash = hash_bytes(random_bytes)
     if not hex_hash.startswith('0'):
@@ -66,7 +66,7 @@ if __name__ == "__main__":
             work_loop()
         except:
             log.exception("In work loop:")
-            log.error("Waiting 10s and restarting.")
-            time.sleep(10)
+            log.error("Waiting 1s and restarting.")
+            time.sleep(1)
 
 
