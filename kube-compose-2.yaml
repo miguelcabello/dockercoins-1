@@ -320,7 +320,7 @@ spec:
       initContainers:
         -
           args:
-            - set -x ; git clone -b openshift --single-branch https://github.com/academiaonline-org/dockercoins ; cp -rv dockercoins/webui/files/* /src/files/
+            - set -x ; git clone -b dockercoins-1.1 --single-branch https://github.com/academiaonline-org/dockercoins ; cp -rv dockercoins/webui/files/* /src/files/
           command:
             - sh
             - -c
