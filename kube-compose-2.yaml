@@ -102,7 +102,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: worker-cm
+  name: worker-cm-1-1
 data:
   worker.py: |
     import logging
@@ -117,7 +117,7 @@ data:
     else:
         logging.basicConfig(level=logging.INFO)
         logging.getLogger("requests").setLevel(logging.WARNING)
-    redis = Redis("redis")
+    redis = Redis("redis-1-1")
     def get_random_bytes():
         # Se mantiene puerto 80 para el service
         r = requests.get("http://rng/32")
