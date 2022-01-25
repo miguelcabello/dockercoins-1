@@ -361,7 +361,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker-deploy
+  name: worker-deploy-1-1
 spec:
   replicas: 2
   selector:
@@ -369,7 +369,7 @@ spec:
       app: worker
       env: production
       tier: backend
-      version-dockercoins: "1.0"
+      version-dockercoins: "1.1"
       version-worker: "0.2"
   template:
     metadata:
@@ -377,7 +377,7 @@ spec:
         app: worker
         env: production
         tier: backend
-        version-dockercoins: "1.0"
+        version-dockercoins: "1.1"
         version-worker: "0.2"
     spec:
       imagePullSecrets:
@@ -415,7 +415,7 @@ spec:
                 key: worker.py
                 mode: 0400
                 path: worker.py
-            name: worker-cm
+            name: worker-cm-1-1
           name: worker-volume
 ---
 apiVersion: route.openshift.io/v1
