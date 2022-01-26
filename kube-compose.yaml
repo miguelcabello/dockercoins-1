@@ -164,8 +164,6 @@ spec:
         version-dockercoins: "1.0"
         version-hasher: "0.1"
     spec:
-      imagePullSecrets:
-        - name: docker-academiaonline
       containers:
         - 
           args:
@@ -218,8 +216,6 @@ spec:
         version-dockercoins: "1.0"
         version-rng: "0.1"
     spec:
-      imagePullSecrets:
-        - name: docker-academiaonline
       containers:
         - 
           args:
@@ -273,8 +269,6 @@ spec:
         version-dockercoins: "1.0"
         version-webui: "2.0"
     spec:
-      imagePullSecrets:
-        - name: santander      
       containers:
         - 
           args:
@@ -420,8 +414,6 @@ spec:
         version-dockercoins: "1.1"
         version-redis: "latest"
     spec:
-      imagePullSecrets:
-        - name: docker-academiaonline
       containers:
         - 
           args:
