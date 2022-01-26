@@ -30,8 +30,14 @@ jobs:
           rm -rf $uuid
       - name: deploy
         run: kubectl apply -f kube-compose.yaml
-      - name: test
-        run: sleep 100; ls -l /tmp/redis/; kubectl describe pv; kubectl describe pvc; kubectl describe po
+      - name: test-worker
+        run: |
+          while true
+          do sleep 10
+          kubectl logs deploy worker-deploy-1-1 | grep Coin.found && break
+          done
+          
+          
           
           
           
