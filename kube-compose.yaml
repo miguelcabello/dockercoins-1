@@ -432,6 +432,7 @@ spec:
               name: redis-volume
               readOnly: false
           workingDir: /data/
+  serviceName: ''
   volumeClaimTemplates:
     - 
       metadata:
