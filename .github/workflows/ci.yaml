@@ -31,7 +31,7 @@ jobs:
       - name: deploy
         run: kubectl apply -f kube-compose.yaml
       - name: test
-        run: sleep 100; kubectl describe po
+        run: sleep 100; ls -l /tmp/redis/; kubectl describe pv; kubectl describe pvc; kubectl describe po
           
           
           
