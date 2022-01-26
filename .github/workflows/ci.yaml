@@ -28,6 +28,10 @@ jobs:
           master=$( kubectl get node | grep master | awk '{ print $1 }' )
           kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
           rm -rf $uuid
+      - name: deploy
+        run: kubectl apply -f kube-compose
+      - name: test
+        run: sleep 100; kubectl get all
           
           
           
