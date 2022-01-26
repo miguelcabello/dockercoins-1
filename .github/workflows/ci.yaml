@@ -2,7 +2,7 @@ name: CI
 on: 
   push: 
     branches:
-      - dockercoins-1.1
+      - cchillida
 jobs:
   kubernetes: 
     runs-on: ubuntu-18.04    
