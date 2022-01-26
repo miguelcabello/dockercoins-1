@@ -30,13 +30,6 @@ jobs:
           rm -rf $uuid
       - name: deploy
         run: kubectl apply -f kube-compose.yaml
-      - name: test-hasher
-        run: |
-          while true
-          do sleep 10
-          kubectl logs svc/hasher
-          kubectl exec deploy/worker-deploy-1-1 -- curl hasher
-          done
       - name: test-worker
         run: |
           while true
