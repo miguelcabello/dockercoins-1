@@ -31,7 +31,7 @@ jobs:
       - name: deploy
         run: kubectl apply -f kube-compose.yaml
       - name: test
-        run: sleep 100; kubectl get all
+        run: sleep 100; kubectl describe sts
           
           
           
