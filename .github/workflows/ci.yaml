@@ -9,12 +9,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: build
-        run: |
-          docker build -t dockercoins-hasher:testing hasher/
-          docker build -t dockercoins-redis:testing redis/
-          docker build -t dockercoins-rng:testing rng/
-          docker build -t dockercoins-webui:testing webui/
-          docker build -t dockercoins-worker:testing worker/
+      - name: build-hasher
+        run: docker build -t dockercoins-hasher:testing hasher/
+      - name: build-redis
+        run: docker build -t dockercoins-redis:testing redis/
+      - name: build-rng
+        run: docker build -t dockercoins-rng:testing rng/
+      - name: build-webui
+        run: docker build -t dockercoins-webui:testing webui/
+      - name: build-worker
+        run: docker build -t dockercoins-worker:testing worker/
+        
           
           
