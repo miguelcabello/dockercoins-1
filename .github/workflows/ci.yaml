@@ -36,7 +36,12 @@ jobs:
           do sleep 10
           kubectl logs deploy worker-deploy-1-1 | grep Coin.found && break
           done
-          
+      - name: test-webui
+        run: |
+          while true
+          do sleep 10
+          kubectl logs svc webui | grep WEBUI.running && break
+          done
           
           
           
