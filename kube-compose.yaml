@@ -453,6 +453,20 @@ provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: redis-sc
+  hostPath:
+    path: /tmp/redis/
+    type: DirectoryOrCreate
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: redis-1-1
