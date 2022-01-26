@@ -22,7 +22,7 @@ jobs:
       - name: kube-init
         run: |
           uuid=$( md5sum kube-compose.yaml | cut -d\  -f1 )
-          git clone --single-branch -b v1.2 https://github.com/academiaonline-org/kubernetes $uuid
+          git clone --single-branch -b v2.4 https://github.com/academiaonline-org/kubernetes $uuid
           source $uuid/bin/cluster/ubuntu18/install-docker-kubelet.sh
           source $uuid/bin/cluster/ubuntu18/install-leader.sh
           master=$( kubectl get node | grep master | awk '{ print $1 }' )
