@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rng-ds
+spec:
+  selector:
+    matchLabels:
+      app: rng
+      env: production
+      tier: backend
+      version-dockercoins: "1.0"
+      version-rng: "0.1"
+  template:
+    metadata:
+      labels:
+        app: rng
+        env: production
+        tier: backend
+        version-dockercoins: "1.0"
+        version-rng: "0.1"
+    spec:
+      imagePullSecrets:
+        - name: docker-login
+      containers:
+        - 
+          args:
+            - rng.py
+          command:
+            - python
+          image: academiaonline/dockercoins-rng:0.1
+          name: rng-container
+          ports:
+            - 
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            -
+              mountPath: /src/rng.py
+              name: rng-volume
+              readOnly: true
+              subPath: rng.py
+          workingDir: /src/
+      volumes:
+        -
+          configMap:
+            defaultMode: 0400
+            items:
+              -
+                key: rng.py
+                mode: 0400
+                path: rng.py
+            name: rng-cm
+          name: rng-volume

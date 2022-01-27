@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-1-1
+spec:
+  ports:
+    -
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+    env: production
+    tier: database
+    version-dockercoins: "1.1"
+    version-redis: "latest"
+  type: ClusterIP

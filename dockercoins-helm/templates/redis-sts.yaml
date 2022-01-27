@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-sts-1-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      env: production
+      tier: database
+      version-dockercoins: "1.1"
+      version-redis: "latest"
+  template:
+    metadata:
+      labels:
+        app: redis
+        env: production
+        tier: database
+        version-dockercoins: "1.1"
+        version-redis: "latest"
+    spec:
+      imagePullSecrets:
+        - name: docker-login
+      containers:
+        - 
+          args:
+            - redis-server
+          command:
+            - docker-entrypoint.sh
+          image: library/redis:latest
+          name: redis-container
+          ports:
+            - 
+              containerPort: 6379
+              protocol: TCP
+          volumeMounts:
+            -
+              mountPath: /data/
+              name: redis-volume
+              readOnly: false
+          workingDir: /data/
+  serviceName: ''
+  volumeClaimTemplates:
+    - 
+      metadata:
+        name: redis-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gp2
+        resources:
+          requests:
+            storage: 1Gi

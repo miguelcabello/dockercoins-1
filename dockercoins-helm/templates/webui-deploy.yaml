@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webui
+      env: production
+      tier: frontend
+      version-dockercoins: "1.0"
+      version-webui: "2.0"
+  template:
+    metadata:
+      labels:
+        app: webui
+        env: production
+        tier: frontend
+        version-dockercoins: "1.0"
+        version-webui: "2.0"
+    spec:
+      imagePullSecrets:
+        - name: docker-login
+      containers:
+        - 
+          args:
+            - webui.js
+          command:
+            - node
+          image: academiaonline/dockercoins-webui:2.0
+          name: webui-container
+          ports:
+            - 
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            -
+              mountPath: /src/files/
+              name: webui-files
+              readOnly: true
+            -
+              mountPath: /src/webui.js
+              name: webui-volume
+              readOnly: true
+              subPath: webui.js
+          workingDir: /src/
+      initContainers:
+        -
+          args:
+            - set -x ; git clone -b dockercoins-1.1 --single-branch https://github.com/cchillida/dockercoins ; cp -rv dockercoins/webui/files/* /src/files/
+          command:
+            - sh
+            - -c
+          image: bitnami/git:latest
+          name: webui-git
+          volumeMounts:
+            -
+              mountPath: /downloads/
+              name: webui-downloads
+              readOnly: false
+            -
+              mountPath: /src/files/
+              name: webui-files
+              readOnly: false
+          workingDir: /downloads/
+      volumes:
+        -
+          configMap:
+            defaultMode: 0400
+            items:
+              -
+                key: webui.js
+                mode: 0400
+                path: webui.js
+            name: webui-cm-1-1
+          name: webui-volume
+        -
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
+          name: webui-downloads
+        -
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
+          name: webui-files
