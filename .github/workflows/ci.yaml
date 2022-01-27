@@ -29,7 +29,7 @@ jobs:
           kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
           rm -rf $uuid
       - name: deploy
-        run: kubectl apply -f kube-compose.yaml
+        run: kubectl apply -f etc/kubernetes/manifests/
       - name: test-worker
         run: |
           while true
