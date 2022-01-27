@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deploy-1-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: worker
+      env: production
+      tier: backend
+      version-dockercoins: "1.1"
+      version-worker: "0.2"
+  template:
+    metadata:
+      labels:
+        app: worker
+        env: production
+        tier: backend
+        version-dockercoins: "1.1"
+        version-worker: "0.2"
+    spec:
+      containers:
+        - 
+          args:
+            - worker.py
+          command:
+            - python
+          image: dockercoins-worker:testing
+          name: worker-container
+          ports:
+            - 
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 30Mi
+            requests:
+              memory: 20Mi
+          volumeMounts:
+            -
+              mountPath: /src/worker.py
+              name: worker-volume
+              readOnly: true
+              subPath: worker.py
+          workingDir: /src/
+      volumes:
+        -
+          configMap:
+            defaultMode: 0400
+            items:
+              -
+                key: worker.py
+                mode: 0400
+                path: worker.py
+            name: worker-cm-1-1
+          name: worker-volume
+
