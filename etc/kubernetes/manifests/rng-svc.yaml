@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rng
+spec:
+  ports:
+    -
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: rng
+    env: production
+    tier: backend
+    version-dockercoins: "1.0"
+    version-rng: "0.1"
+  type: ClusterIP
