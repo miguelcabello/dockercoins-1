@@ -44,8 +44,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: red
-  labels:
-    app: red
 spec:
   ports:
   - port: 80
@@ -57,8 +55,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blue
-  labels:
-    app: blue
 spec:
   ports:
   - port: 80
