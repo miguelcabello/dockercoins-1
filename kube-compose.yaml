@@ -38,7 +38,6 @@ metadata:
   name: dockercoins
   labels:
     app: dockercoins
-    service: dockercoins
 spec:
   ports:
   - port: 8080
@@ -50,9 +49,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dockercoins-v1
-  labels:
-    app: dockercoins
-    version: v1
 spec:
   replicas: 1
   selector:
@@ -78,9 +74,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dockercoins-v2
-  labels:
-    app: dockercoins
-    version: v2
 spec:
   replicas: 1
   selector:
@@ -109,10 +102,8 @@ metadata:
 spec:
   host: dockercoins
   subsets:
-  - name: v1
-    labels:
+  - labels:
       version: v1
-  - name: v2
-    labels:
+  - labels:
       version: v2
 ---
