@@ -120,7 +120,7 @@ spec:
       containers:
       - name: red
         args:
-        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n Red" | nc -l -p 8080  ; done
+        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n red" | nc -l -p 8080  ; done
         command:
         - sh
         - -c
