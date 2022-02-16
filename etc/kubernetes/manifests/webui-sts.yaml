@@ -16,8 +16,6 @@ spec:
         env: production
         tier: frontend
     spec:
-      imagePullSecrets:
-        - name: santander      
       containers:
         - 
           args:
