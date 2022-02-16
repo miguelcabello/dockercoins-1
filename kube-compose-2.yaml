@@ -205,7 +205,8 @@ spec:
   - name: v2
     labels:
       version: v2
----apiVersion: networking.istio.io/v1alpha3
+---
+apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: blue
