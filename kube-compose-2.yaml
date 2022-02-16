@@ -30,7 +30,7 @@ spec:
     - destination:
         host: red
         port:
-          number: 8080
+          number: 80
   - match:
     - uri:
         exact: /blue
@@ -38,7 +38,7 @@ spec:
     - destination:
         host: blue
         port:
-          number: 8080
+          number: 80
 ---
 apiVersion: v1
 kind: Service
@@ -48,7 +48,8 @@ metadata:
     app: red
 spec:
   ports:
-  - port: 8080
+  - port: 80
+    targetPort: 8080
   selector:
     app: red
 ---
@@ -60,7 +61,8 @@ metadata:
     app: blue
 spec:
   ports:
-  - port: 8080
+  - port: 80
+    targetPort: 8080
   selector:
     app: blue
 ---
@@ -68,9 +70,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: red-v1
-  labels:
-    app: red
-    version: v1
 spec:
   replicas: 1
   selector:
@@ -100,9 +99,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: red-v2
-  labels:
-    app: red
-    version: v2
 spec:
   replicas: 1
   selector:
@@ -132,9 +128,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blue-v1
-  labels:
-    app: blue
-    version: v1
 spec:
   replicas: 1
   selector:
@@ -164,9 +157,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blue-v2
-  labels:
-    app: blue
-    version: v2
 spec:
   replicas: 1
   selector:
@@ -199,9 +189,11 @@ metadata:
 spec:
   host: red
   subsets:
-  - labels:
+  - name: v1
+    labels:
       version: v1
-  - labels:
+  - name: v2
+    labels:
       version: v2
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -211,8 +203,10 @@ metadata:
 spec:
   host: blue
   subsets:
-  - labels:
+  - name: v1
+    labels:
       version: v1
-  - labels:
+  - name: v2
+    labels:
       version: v2
 ---
