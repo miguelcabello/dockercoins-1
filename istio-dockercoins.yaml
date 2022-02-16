@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: dockercoins-gateway
+  name: dockercoins-gw
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -16,12 +16,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: dockercoins
+  name: dockercoins-vs
 spec:
   hosts:
   - "*"
   gateways:
-  - dockercoins-gateway
+  - dockercoins-gw
   http:
   - match:
     - uri:
@@ -30,7 +30,7 @@ spec:
     - destination:
         host: dockercoins
         port:
-          number: 8080
+          number: 80
 ---
 apiVersion: v1
 kind: Service
@@ -40,8 +40,8 @@ metadata:
     app: dockercoins
 spec:
   ports:
-  - port: 8080
-    name: http
+  - port: 80
+    targetPort: 8080
   selector:
     app: dockercoins
 ---
