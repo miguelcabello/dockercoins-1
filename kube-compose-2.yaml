@@ -199,11 +199,9 @@ metadata:
 spec:
   host: red
   subsets:
-  - name: v1
-    labels:
+  - labels:
       version: v1
-  - name: v2
-    labels:
+  - labels:
       version: v2
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -213,10 +211,8 @@ metadata:
 spec:
   host: blue
   subsets:
-  - name: v1
-    labels:
+  - labels:
       version: v1
-  - name: v2
-    labels:
+  - labels:
       version: v2
 ---
