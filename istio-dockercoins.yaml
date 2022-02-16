@@ -102,8 +102,10 @@ metadata:
 spec:
   host: dockercoins
   subsets:
-  - labels:
+  - name: v1
+    labels:
       version: v1
-  - labels:
+  - name: v2
+    labels:
       version: v2
 ---
