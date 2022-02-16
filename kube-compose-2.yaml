@@ -1,0 +1,221 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: dockercoins-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dockercoins
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - dockercoins-gateway
+  http:
+  - match:
+    - uri:
+        exact: /red
+    route:
+    - destination:
+        host: red
+        port:
+          number: 8080
+  - match:
+    - uri:
+        exact: /blue
+    route:
+    - destination:
+        host: blue
+        port:
+          number: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: red
+  labels:
+    app: red
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: red
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue
+  labels:
+    app: blue
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: blue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-v1
+  labels:
+    app: red
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: red
+      version: v1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: red
+        version: v1
+    spec:
+      containers:
+      - name: red
+        args:
+        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n RED" | nc -l -p 8080  ; done
+        command:
+        - sh
+        - -c
+        image: busybox
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-v2
+  labels:
+    app: red
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: red
+      version: v2
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: red
+        version: v2
+    spec:
+      containers:
+      - name: red
+        args:
+        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n Red" | nc -l -p 8080  ; done
+        command:
+        - sh
+        - -c
+        image: busybox
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-v1
+  labels:
+    app: blue
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blue
+      version: v1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: blue
+        version: v1
+    spec:
+      containers:
+      - name: blue
+        args:
+        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n BLUE" | nc -l -p 8080  ; done
+        command:
+        - sh
+        - -c
+        image: busybox
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-v2
+  labels:
+    app: blue
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blue
+      version: v2
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: blue
+        version: v2
+    spec:
+      containers:
+      - name: blue
+        args:
+        - while true ; do  echo -e "HTTP/1.1 200 OK\n\n blue" | nc -l -p 8080  ; done
+        command:
+        - sh
+        - -c
+        image: busybox
+        ports:
+        - containerPort: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: red
+spec:
+  host: red
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+---apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: blue
+spec:
+  host: blue
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+---
