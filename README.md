@@ -11,7 +11,7 @@ docker pull redis:alpine
 docker inspect redis:alpine
 docker build -t miguelcabello/redis:alpine redis/ 
 docker push miguelcabello/redis:alpine
-docker run -d --entrypoint docker-entrypoint.sh --name redis --read-only --restart always -u redis -w /data/ --network dockercoins miguelcabello/redis:alpine redis-server
+docker run -d --entrypoint docker-entrypoint.sh --name redis --read-only --restart always -u redis -v redis:/data/ -w /data/ --network dockercoins miguelcabello/redis:alpine redis-server
 docker build -t miguelcabello/python:flask rng/
 docker push miguelcabello/python:flask
 docker run -d --entrypoint python --name rng --read-only --restart always -u nobody -v $PWD/rng/rng.py:/data/rng.py -w /data/ --network dockercoins miguelcabello/python:flask rng.py
