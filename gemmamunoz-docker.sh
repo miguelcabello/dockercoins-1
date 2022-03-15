@@ -18,5 +18,5 @@ docker push gemmadockerid/python:redis-requests
 docker run -d --entrypoint python --name worker --read-only --restart always -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins gemmadockerid/python:redis-requests worker.py 
 docker build -t gemmadockerid/node:4-slim-express-redis webui/
 docker push gemmadockerid/node:4-slim-express-redis
-docker run -d --entrypoint node --name webui --read-only --restart always -u nobody -v $PWD/webui/webui.js:/data/webui.js -w /data/ --network dockercoins gemmadockerid/node:4-slim-express-redis webui.js
+docker run -p 8080:80 -d --entrypoint node --name webui --read-only --restart always -u nobody -v $PWD/webui/webui.js:/data/webui.js -w /data/ --network dockercoins gemmadockerid/node:4-slim-express-redis webui.js
 
