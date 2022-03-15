@@ -18,3 +18,4 @@ docker run  --entrypoint python --name rng --read-only --rm -u nobody -v $PWD/rn
 docker build -t miguelcabello/python:redis-requests worker/
 docker push miguelcabello/python:redis-requests
 docker run --entrypoint python --name worker --read-only --rm -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins miguelcabello/python:redis-requests worker.py 
+```
