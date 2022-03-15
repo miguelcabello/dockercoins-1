@@ -2,8 +2,13 @@
 ```
 git clone https://github.com/Bertbadi2022/dockercoins
 cd dockercoins
-docker build -t bertbadi2022/ruby:sinatra-thin hasher/
-docker login
-docker push bertbadi2022/ruby:sinatra-thin
 docker network create dockercoins
+docker login
+docker build -t bertbadi2022/ruby:sinatra-thin hasher/
+docker push bertbadi2022/ruby:sinatra-thin
 docker run  --entrypoint ruby --name hasher --read-only --rm -u nobody -v $PWD/hasher/hasher.rb:/data/hasher.rb -w /data/ --network dockercoins bertbadi2022/ruby:sinatra-thin hasher.rb
+docker pull redis:alpine
+docker inspect redis:alpine
+docker build -t bertbadi2022/redis:alpine redis/ 
+docker push bertbadi2022/redis:alpine
+docker run  --entrypoint docker-entrypoint.sh --name redis --read-only --rm -u nobody -w /data/ --network dockercoins bertbadi2022/redis:alpine redis-server
