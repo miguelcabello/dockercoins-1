@@ -1,4 +1,5 @@
 # dockercoins
+```
 git clone https://github.com/Bertbadi2022/dockercoins
 cd dockercoins
 docker build -t bertbadi2022/ruby:sinatra-thin hasher/
